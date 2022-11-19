@@ -1,0 +1,7 @@
+flask
+ibm_db==3.0.1
+python-dotenv
+pandas
+requests
+flask_session
+APScheduler
