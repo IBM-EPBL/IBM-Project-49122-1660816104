@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block content %}
+<section class="vh-100" style="background-color: #0000">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: 0.5rem">
+          <div class="row g-0">
+            <div
+              class="col-md-4 gradient-custom text-center text-white"
+              style="
+                border-top-left-radius: 0.5rem;
+                border-bottom-left-radius: 0.5rem;
+              "
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                alt="Avatar"
+                class="img-fluid my-5"
+                style="width: 80px"
+              />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h3 class="text-dark">PROFILE</h3>
+                <hr class="mt-0 mb-4" />
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6 class="text-dark">First Name</h6>
+                    <p class="text-muted">{{first_name}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6 class="text-dark">Last Name</h6>
+                    <p class="text-muted">{{last_name}}</p>
+                  </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                  <h6 class="text-dark">Email</h6>
+                  <p class="text-muted">{{email}}</p>
+                </div>
+                <hr class="mt-0 mb-4" />
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <button type="submit" class="btn btn-primary" id="logout">
+                      Logout
+                    </button>
+                    <script>
+                      document.getElementById("logout").onclick = function () {
+                        logout();
+                      };
+
+                      function logout() {
+                        $.ajax({
+                          url: "/logout",
+                          type: "POST",
+                          success: function (response) {
+                            window.location.href = "/";
+                          },
+                          error: function (error) {
+                            console.log(error);
+                          },
+                        });
+                      }
+                    </script>
+                    <button class="btn btn-primary" id="back">News</button>
+                    <script>
+                      document.getElementById("back").onclick = function () {
+                        back();
+                      };
+                      function back() {
+                        window.location.href = "/dashboard";
+                      }
+                    </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
