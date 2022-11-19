@@ -1,0 +1,65 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: cpro-frontweb
+  namespace: gan-cpro-ns
+  labels:
+    app: cpro-application
+    subname: frontweb
+spec:
+  selector:
+    matchLabels:
+      app: cpro-application
+      subname: frontweb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cpro-application
+        subname: frontweb
+    spec:
+      containers:
+        - name: container-frontweb
+          image: "jp.icr.io/gan-acc-registry-ns-02/cpro-bankweb"
+          imagePullPolicy: Always
+          ports:
+            - name: my-http
+              containerPort: 9030
+              protocol: TCP
+      imagePullSecrets:
+        - name: secret-ibm-container-registry-cpro
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cpro-frontweb
+  namespace: gan-cpro-ns
+  labels:
+    app: cpro-application
+    subname: frontweb
+spec:
+  type: LoadBalancer
+  ports:
+    - name: my-http
+      port: 9090
+      targetPort: my-http
+  selector:
+    app: cpro-application
+    subname: frontweb
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: cpro-frontweb
+  namespace: gan-cpro-ns
+  labels:
+    app: cpro-application
+    subname: frontweb
+spec:
+  path: /
+  to:
+    kind: Service
+    name: cpro-frontweb
+    weight: 100
+  port:
+    targetPort: my-http
