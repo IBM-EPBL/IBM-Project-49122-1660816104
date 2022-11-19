@@ -1,0 +1,114 @@
+{% extends 'base.html' %} {% block content %}
+
+
+<section
+  class="hero d-flex flex-column justify-content-center align-items-center"
+  data-aos="fade"
+  data-aos-delay="1500"
+>
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-lg-6 text-center">
+        <h2>Welcome {{first_name}}!<br/>
+        Scroll for more news
+        </h2>
+      </div>
+      <div class="col-lg-6 text-center">
+        <button type="submit" class="btn btn-primary" id="logout">
+          Logout
+        </button>
+        <script>
+          document.getElementById("logout").onclick = function() {logout()};
+          
+          function logout() {
+            $.ajax({
+              url: "/logout",
+              type: "POST",
+              success: function(response) {
+                window.location.href = "/";
+              },
+              error: function(error) {
+                console.log(error);
+              }
+            });
+          }
+          </script>
+      
+        <button class="btn btn-primary" id="profile">
+          Profile
+      </button>
+<script>
+  document.getElementById("profile").onclick = function() {profile()};
+  function profile() {
+    window.location.href = "/profile";
+  }
+</script>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Hero Section -->
+
+<div class="m-4">
+    <div class="row  d-flex justify-content-center">
+    {% for row in students.articles %}
+    <div class="m-2 col-md-3">
+      <div class="card" style="width: 18rem;">
+        <img src={{row["media"]}} class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title text-dark">{{row["title"]}}</h5>
+          <p class="card-text text-dark" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">{{row["summary"]}}...</p>
+          <button  type="button"  class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal{{loop.index0}}">Read</a>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal{{loop.index0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">{{row["author"]}}</h1>
+           
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+          </div>
+          <div class="modal-body">
+            <span class="text-dark">{{row["published_date"]}}</span><br/><br/>
+          <p class="text-dark">{{row["summary"]}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+      {% endfor %}
+    </div>
+    </div>
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="copyright">
+      &copy; Copyright <strong><span>BlitzcraftHQ</span></strong
+      >. All Rights Reserved
+    </div>
+  </div>
+</footer>
+<!-- End Footer -->
+
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"
+  ><i class="bi bi-arrow-up-short"></i
+></a>
+
+<div id="preloader">
+  <div class="line"></div>
+</div>
+
+
+
+<!-- Vendor JS Files -->
+
+{% endblock %}
