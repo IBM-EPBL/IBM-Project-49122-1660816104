@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipeline-icr-trivy
+  namespace: gan-tekton-icr-trivy-ns
+spec:
+  tasks:
+    - name: scan-trivy
+      taskRef:
+        name: ibm-img-scan-trivy
+      params:
+        - name: image-url
+          value: jp.icr.io/gan-acc-registry-ns-02/cpro-bankweb
+        - name: scan-image
+          value: "true"
